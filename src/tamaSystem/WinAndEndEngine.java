@@ -1,0 +1,75 @@
+package tamaSystem;
+
+import tamaGUI.TamaGUIEnd;
+import tamaGUI.TamaGUI;
+import tamaGUI.TamaGUIStart;
+
+/** WIN ENGINE CLASS
+ * This class is for winners! 
+ * The class will will start a counter and when its reached
+ *	player win Tama.
+ * 
+ * At lv 3, you don't a timer. Why?
+ * You don't win in the game of life, you just survive...
+ *
+ */
+
+public class WinAndEndEngine implements Runnable {
+
+	private	TamaGUIEnd teg = new TamaGUIEnd();
+
+	//in seconds
+	private int tamaWinTimer;
+
+	//The loop, Win checker
+	@Override
+	public void run() {
+		tamaWinTimer = 3600;
+
+		if(TamaGUI.gameLevel == 3){
+			
+		}
+		else if (TamaGUI.gameLevel <= 2){
+			int x = 0;
+			int z = 1;
+			while(z == 1){
+				if(tamaWinTimer <= x){
+					winning();
+					z = 0;
+				}
+				else if (x != tamaWinTimer){
+					try {
+						x++;
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public void deathByHunger(){
+		TamaGUIEnd.textEndInfo.append("YOUR TAMA DIED OF HUNGER \n");
+		TamaGUIEnd.textEndInfo.append("RIP " + TamaGUIStart.TAMA_NAME + "\n\n");
+		TamaGUIStart.ALL_THREADS_RUNNING = false;
+		TamaGUI.GUIFrame.setVisible(false);
+		teg.tamaEndGUIStarter();
+	}
+
+	public void deathByDepression(){
+		TamaGUIEnd.textEndInfo.append("YOUR TAMA DIED OF DEPRESSION \n");
+		TamaGUIEnd.textEndInfo.append("RIP " + TamaGUIStart.TAMA_NAME +"\n\n");
+		TamaGUIStart.ALL_THREADS_RUNNING = false;
+		TamaGUI.GUIFrame.setVisible(false);
+		teg.tamaEndGUIStarter();
+	}
+
+	private void winning(){
+		TamaGUIEnd.textEndInfo.append("YOU WIN \n");
+		TamaGUIEnd.textEndInfo.append(TamaGUIStart.TAMA_NAME + " is all grown up now!\n\n");
+		TamaGUIStart.ALL_THREADS_RUNNING = false;
+		TamaGUI.GUIFrame.setVisible(false);
+		teg.tamaEndGUIStarter();
+	}
+}
