@@ -17,7 +17,7 @@ public class DepressionEngine implements Runnable {
 	//
 	//Note: Incase future upgrade/change the varible is here.
 	//
-	public static int tamaCurrentDepression;
+	private int tamaCurrentDepression = 10000;
 	private int depressionValue = 20;
 	private int mouseHappiness = 50;
 	private int mouseHappinessSinker = 10;
@@ -25,7 +25,7 @@ public class DepressionEngine implements Runnable {
 
 	//Depression, Thread sleep timer.
 	protected final int depressionBuilderTimeValue = 1000;
-	
+
 	private boolean deathByDepression = false;
 
 	public DepressionEngine(){
@@ -34,8 +34,6 @@ public class DepressionEngine implements Runnable {
 	//the loop
 	@Override
 	public void run() {
-		tamaCurrentDepression = 10000;
-
 		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
 			depressionBarMethod();
 			depressionWarnings();
@@ -78,49 +76,11 @@ public class DepressionEngine implements Runnable {
 		}
 	}
 
+	//DONT NEED THIS METHOD??
 	//HungerBar method/Checker updater. 
 	private void depressionBarMethod(){
-		TamaGUI.depressionBar.setString("Happiness: " + Integer.toString(tamaCurrentDepression));
-		if (tamaCurrentDepression >= 9000){
-			TamaGUI.depressionBar.setValue(100);
-			TamaGUI.depressionBar.setForeground(new Color(0, 128, 0));
-		}
-		else if (tamaCurrentDepression >= 7500){
-			TamaGUI.depressionBar.setForeground(new Color(0, 128, 0));
-			TamaGUI.depressionBar.setValue(85);
-		}
-		else if (tamaCurrentDepression >= 5000){
-			TamaGUI.depressionBar.setForeground(new Color(0, 128, 0));
-			TamaGUI.depressionBar.setValue(65);
-		}
-		else if(tamaCurrentDepression >= 4000){
-			TamaGUI.depressionBar.setForeground(Color.ORANGE);
-			TamaGUI.depressionBar.setValue(50);
-		}
-		else if(tamaCurrentDepression >= 3500){
-			TamaGUI.depressionBar.setForeground(Color.ORANGE);
-			TamaGUI.depressionBar.setValue(35);
-		}
-		else if(tamaCurrentDepression >= 3000){
-			TamaGUI.depressionBar.setForeground(Color.ORANGE);
-			TamaGUI.depressionBar.setValue(25);
-		}
-		else if(tamaCurrentDepression >= 2500){
-			TamaGUI.depressionBar.setForeground(Color.PINK);
-			TamaGUI.depressionBar.setValue(20);
-		}
-		else if(tamaCurrentDepression >= 2000){
-			TamaGUI.depressionBar.setForeground(Color.RED);
-			TamaGUI.depressionBar.setValue(10);
-		}
-		else if(tamaCurrentDepression >= 1500){
-			TamaGUI.depressionBar.setForeground(Color.PINK);
-			TamaGUI.depressionBar.setValue(10);
-		}
-		else if(tamaCurrentDepression >= 1000){
-			TamaGUI.depressionBar.setForeground(Color.RED);
-			TamaGUI.depressionBar.setValue(10);
-		}
+
+
 	}
 
 	//When Tama reach 0 depression
@@ -164,8 +124,17 @@ public class DepressionEngine implements Runnable {
 		tamaCurrentDepression -= mouseHappinessSinker;
 	}
 
+	//
+	//
+	//Getters and setters
 	public boolean isDeathByDepression() {
 		return deathByDepression;
+	}
+	public int getTamaCurrentDepression() {
+		return tamaCurrentDepression;
+	}
+	public void setTamaCurrentDepression(int tamaCurrentDepression) {
+		this.tamaCurrentDepression = tamaCurrentDepression;
 	}
 
 }

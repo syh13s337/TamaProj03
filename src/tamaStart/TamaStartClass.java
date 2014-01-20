@@ -12,7 +12,8 @@ import tamaGUI.TamaGUIStart;
 public class TamaStartClass {
 
 	public static void main(String[] args) {
-		TamaGUIStart tsg = new TamaGUIStart();
-		tsg.frmTamav.setVisible(true);
+		TamaGUIStart tgs = new TamaGUIStart();
+		tgs.TamaStartGUIStarter();
+		
 	}
 }

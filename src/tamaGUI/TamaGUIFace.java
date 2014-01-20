@@ -22,9 +22,11 @@ public class TamaGUIFace extends JComponent implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	ArrayList <ImageIcon> faces;
+	private ArrayList <ImageIcon> faces;
+	private int depresionValue;
 	
 	//The Loop, with depression and hunger checker for sad face.
+
 	@Override
 	public void run() {
 		loadpics();
@@ -37,7 +39,7 @@ public class TamaGUIFace extends JComponent implements Runnable {
 					x = 0;
 					y = 7;
 				}
-				if (DepressionEngine.tamaCurrentDepression <= 3000 || HungerEngine.tamaCurrentHunger <= 3000 ){
+				if (depresionValue <= 3000 || HungerEngine.tamaCurrentHunger <= 3000 ){
 					TamaGUI.label.setIcon(faces.get(y));
 					y++;
 				}else{
@@ -95,6 +97,15 @@ public class TamaGUIFace extends JComponent implements Runnable {
 			faces.add(new ImageIcon("image/YA/bs2.png"));
 			faces.add(new ImageIcon("image/YA/bs3.png"));
 		}
+	}
+	
+	//GETTER
+	public int getDepresionValue() {
+		return depresionValue;
+	}
+	//SETTER
+	public void setDepresionValue(int depresionValue) {
+		this.depresionValue = depresionValue;
 	}
 }
 

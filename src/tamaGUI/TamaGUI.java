@@ -21,7 +21,6 @@ import tamaSystem.GameEngine;
 import tamaSystem.HungerEngine;
 import tamaSystem.MoneyEngine;
 import tamaSystem.ScoreEngine;
-import tamaSystem.WinAndEndEngine;
 
 /** TAMA GUI, the game GUI
  * This is the Main game GUI Class,
@@ -42,25 +41,23 @@ public class TamaGUI extends JFrame implements MouseListener {
 	public static JLabel label;
 	public static TextArea textArea;
 	public static JProgressBar hungerBar;
-	public static JProgressBar depressionBar;
 	public static JProgressBar moneyBar;
 	public static int gameLevel;
+	private JProgressBar depressionBar;
 
 	private TextField textInPut;
 	private ArrayList <String> buttonNames = new ArrayList<String>();
 	private ArrayList <String> tooltips = new ArrayList<String>();
 	private ArrayList <String> infoText = new ArrayList<String>();
-
+	
 	private HungerEngine he;
 	private DepressionEngine de;
 	private DialogEngine di = new DialogEngine();
 	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
 	private MoneyEngine mo = new MoneyEngine();
 	private ScoreEngine se = new ScoreEngine();
-	private TamaGUIFace tgf = new TamaGUIFace();
 
 	public TamaGUI(int lvNr, String frameTitle, String tamaName) {
-		GameEngine ge = new GameEngine(tamaName);		
 		TamaGUI.gameLevel = lvNr;
 		buttonNames(lvNr);
 		initialize(frameTitle, tamaName);
@@ -70,20 +67,20 @@ public class TamaGUI extends JFrame implements MouseListener {
 		Thread diaEngine = new Thread(di, "DialogThread");
 		Thread monEngine = new Thread(mo, "MoneyThead");
 		Thread scoEngine = new Thread(se, "ScoreThread");
-		Thread faceEngine = new Thread(tgf, "FaceThread");
-		Thread gEngine = new Thread(ge, "GameEngine");
 
 		diaEngine.start();
 		monEngine.start();
 		scoEngine.start();
-		faceEngine.start();
-		gEngine.start();
+	}
+	
+	public TamaGUI(){
+		
 	}
 
 	private void initialize(String frameTitle, String TamaName) {
 		he = new HungerEngine();
 		de = new DepressionEngine();
-		
+
 		GUIFrame = new JFrame();
 		GUIFrame.getContentPane().setBackground(Color.WHITE);
 		GUIFrame.setResizable(false);
@@ -386,6 +383,61 @@ public class TamaGUI extends JFrame implements MouseListener {
 			infoText.add("...Home cooked food is the best! ");
 			infoText.add("...What a Fancy Restaurant! ");
 		}
+	}
+
+	//sets and updates DepressionBar
+	public void setDepressionBar(int deppresionValue){
+		depressionBar.setString("Happiness: " + Integer.toString(deppresionValue));
+
+		if (deppresionValue >= 9000){
+			depressionBar.setForeground(new Color(0, 128, 0));
+			depressionBar.setValue(100);
+		}
+		else if (deppresionValue >= 7500){
+			depressionBar.setForeground(new Color(0, 128, 0));
+			depressionBar.setValue(85);
+
+		}
+		else if (deppresionValue >= 5000){
+			depressionBar.setForeground(new Color(0, 128, 0));
+			depressionBar.setValue(65);
+
+		}
+		else if(deppresionValue >= 4000){
+			depressionBar.setForeground(Color.ORANGE);
+			depressionBar.setValue(50);
+
+		}
+		else if(deppresionValue >= 3500){
+			depressionBar.setForeground(Color.ORANGE);
+			depressionBar.setValue(45);
+
+		}
+		else if(deppresionValue >= 3000){
+			depressionBar.setForeground(Color.ORANGE);
+			depressionBar.setValue(30);
+
+		}
+		else if(deppresionValue >= 2500){
+			depressionBar.setForeground(Color.PINK);
+			depressionBar.setValue(20);
+
+		}
+		else if(deppresionValue >= 2000){
+			depressionBar.setForeground(Color.RED);
+			depressionBar.setValue(10);
+
+		}
+		else if(deppresionValue >= 1500){
+			depressionBar.setForeground(Color.PINK);
+			depressionBar.setValue(5);
+
+		}
+		else if(deppresionValue >= 1000){
+			depressionBar.setForeground(Color.RED);
+			depressionBar.setValue(0);
+		}
+
 	}
 
 	//Tama gets happiness by clicking in frame

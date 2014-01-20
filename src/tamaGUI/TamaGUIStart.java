@@ -1,12 +1,18 @@
 package tamaGUI;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
+
+import tamaSystem.GameEngine;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -22,33 +28,30 @@ import java.awt.event.ActionEvent;
 
 public class TamaGUIStart {
 
-	private String tamaName = "";
 	public static boolean ALL_THREADS_RUNNING = true;
 
-	public JFrame frmTamav;
+	private String tamaName = "";
+	private int gamleLevel;
+
+	private JFrame frmTamav;
 	private JTextField txtEnterTamaName;
 	private JTextArea InfoText;
 	private JScrollPane scrollPane;
 	private int tmpX = 1;
 
+	private GameEngine ge = new GameEngine();
+	private Thread gEngine = new Thread(ge, "GameEngine");
+
 	//the starter, with own runnable
 	public void TamaStartGUIStarter(){
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TamaGUIStart window = new TamaGUIStart();
-					window.frmTamav.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});		
+		TamaGUIStart window = new TamaGUIStart();
+		window.frmTamav.setVisible(true);
 	}
-	
+
 	public TamaGUIStart() {
 		initialize();
 	}
-	
+
 	//The Builder and components
 	private void initialize() {
 		frmTamav = new JFrame();
@@ -107,9 +110,10 @@ public class TamaGUIStart {
 				tamaName = txtEnterTamaName.getText();	
 				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
 					tamaName = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(1, " : Baby (EasyMode)", tamaName);
-					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
+					
+					ge.startGameGUI(1, " : Baby (EasyMode)", tamaName);
+					gEngine.start();
 				}
 				else {	
 					InfoText.setText("You need to enter a name for your Tama! ");
@@ -126,9 +130,10 @@ public class TamaGUIStart {
 				tamaName = txtEnterTamaName.getText();	
 				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
 					tamaName = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(2, " : The Kid (NormalMode)", tamaName);
-					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
+					
+					ge.startGameGUI(2, " : The Kid (NormalMode)", tamaName);
+					gEngine.start();
 				}
 				else {	
 					InfoText.setText("You need to enter a name for your Tama! ");
@@ -144,9 +149,11 @@ public class TamaGUIStart {
 				tamaName = txtEnterTamaName.getText();	
 				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
 					tamaName = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(3, " : Young Adult (HardMode)", tamaName);
-					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
+					
+					ge.startGameGUI(3, " : Young Adult (HardMode)", tamaName);
+					gEngine.start();
+
 				}
 				else {	
 					InfoText.setText("You need to enter a name for your Tama! ");
@@ -207,5 +214,13 @@ public class TamaGUIStart {
 
 	public String getTamaName() {
 		return tamaName;
+	}
+
+	public int getGamleLevel() {
+		return gamleLevel;
+	}
+
+	public void setGamleLevel(int gamleLevel) {
+		this.gamleLevel = gamleLevel;
 	}
 }
