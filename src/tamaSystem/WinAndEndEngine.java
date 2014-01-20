@@ -17,9 +17,14 @@ import tamaGUI.TamaGUIStart;
 public class WinAndEndEngine implements Runnable {
 
 	private	TamaGUIEnd teg = new TamaGUIEnd();
+	
+	private boolean win = false;
 
 	//in seconds
 	private int tamaWinTimer;
+
+	public WinAndEndEngine(){
+	}
 
 	//The loop, Win checker
 	@Override
@@ -27,14 +32,14 @@ public class WinAndEndEngine implements Runnable {
 		tamaWinTimer = 3600;
 
 		if(TamaGUI.gameLevel == 3){
-			
+
 		}
 		else if (TamaGUI.gameLevel <= 2){
 			int x = 0;
 			int z = 1;
 			while(z == 1){
 				if(tamaWinTimer <= x){
-					winning();
+					win = true;
 					z = 0;
 				}
 				else if (x != tamaWinTimer){
@@ -49,27 +54,31 @@ public class WinAndEndEngine implements Runnable {
 		}
 	}
 
-	public void deathByHunger(){
+	public void deathByHunger(String tamaName){
 		TamaGUIEnd.textEndInfo.append("YOUR TAMA DIED OF HUNGER \n");
-		TamaGUIEnd.textEndInfo.append("RIP " + TamaGUIStart.TAMA_NAME + "\n\n");
+		TamaGUIEnd.textEndInfo.append("RIP " + tamaName + "\n\n");
 		TamaGUIStart.ALL_THREADS_RUNNING = false;
 		TamaGUI.GUIFrame.setVisible(false);
 		teg.tamaEndGUIStarter();
 	}
 
-	public void deathByDepression(){
+	public void deathByDepression(String tamaName){
 		TamaGUIEnd.textEndInfo.append("YOUR TAMA DIED OF DEPRESSION \n");
-		TamaGUIEnd.textEndInfo.append("RIP " + TamaGUIStart.TAMA_NAME +"\n\n");
+		TamaGUIEnd.textEndInfo.append("RIP " + tamaName +"\n\n");
 		TamaGUIStart.ALL_THREADS_RUNNING = false;
 		TamaGUI.GUIFrame.setVisible(false);
 		teg.tamaEndGUIStarter();
 	}
 
-	private void winning(){
+	public void winning(String tamaName){
 		TamaGUIEnd.textEndInfo.append("YOU WIN \n");
-		TamaGUIEnd.textEndInfo.append(TamaGUIStart.TAMA_NAME + " is all grown up now!\n\n");
+		TamaGUIEnd.textEndInfo.append(tamaName + " is all grown up now!\n\n");
 		TamaGUIStart.ALL_THREADS_RUNNING = false;
 		TamaGUI.GUIFrame.setVisible(false);
 		teg.tamaEndGUIStarter();
+	}
+	
+	public boolean isWin() {
+		return win;
 	}
 }

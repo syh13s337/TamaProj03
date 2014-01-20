@@ -1,7 +1,6 @@
 package tamaGUI;
 
 import java.awt.Color;
-
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -18,6 +17,7 @@ import javax.swing.JProgressBar;
 import tamaDialogs.DialogEngine;
 import tamaDialogs.TalkingToTamaEngine;
 import tamaSystem.DepressionEngine;
+import tamaSystem.GameEngine;
 import tamaSystem.HungerEngine;
 import tamaSystem.MoneyEngine;
 import tamaSystem.ScoreEngine;
@@ -51,44 +51,43 @@ public class TamaGUI extends JFrame implements MouseListener {
 	private ArrayList <String> tooltips = new ArrayList<String>();
 	private ArrayList <String> infoText = new ArrayList<String>();
 
-	private HungerEngine he = new HungerEngine();
+	private HungerEngine he;
+	private DepressionEngine de;
 	private DialogEngine di = new DialogEngine();
-	private DepressionEngine de = new DepressionEngine();
 	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
 	private MoneyEngine mo = new MoneyEngine();
 	private ScoreEngine se = new ScoreEngine();
-	private WinAndEndEngine we = new WinAndEndEngine();
 	private TamaGUIFace tgf = new TamaGUIFace();
 
-	public TamaGUI(int lvNr, String frameTitle) {
-		Thread hunEngine = new Thread(he, "FoodThread");
-		Thread diaEngine = new Thread(di, "DialogThread");
-		Thread depEngine = new Thread(de, "DepressionThread");
-		Thread monEngine = new Thread(mo, "MoneyThead");
-		Thread scoEngine = new Thread(se, "ScoreThread");
-		Thread winEngine = new Thread(we, "WinThread");
-		Thread faceEngine = new Thread(tgf, "FaceThread");
-
+	public TamaGUI(int lvNr, String frameTitle, String tamaName) {
+		GameEngine ge = new GameEngine(tamaName);		
 		TamaGUI.gameLevel = lvNr;
 		buttonNames(lvNr);
-		initialize(frameTitle);
+		initialize(frameTitle, tamaName);
 		di.setDialogLevel(lvNr);
 		tt.setDialogLevel(lvNr);
 
-		hunEngine.start();
+		Thread diaEngine = new Thread(di, "DialogThread");
+		Thread monEngine = new Thread(mo, "MoneyThead");
+		Thread scoEngine = new Thread(se, "ScoreThread");
+		Thread faceEngine = new Thread(tgf, "FaceThread");
+		Thread gEngine = new Thread(ge, "GameEngine");
+
 		diaEngine.start();
-		depEngine.start();
 		monEngine.start();
 		scoEngine.start();
-		winEngine.start();
 		faceEngine.start();
+		gEngine.start();
 	}
 
-	private void initialize(String frameTitle) {
+	private void initialize(String frameTitle, String TamaName) {
+		he = new HungerEngine();
+		de = new DepressionEngine();
+		
 		GUIFrame = new JFrame();
 		GUIFrame.getContentPane().setBackground(Color.WHITE);
 		GUIFrame.setResizable(false);
-		GUIFrame.setTitle(TamaGUIStart.TAMA_NAME + frameTitle);
+		GUIFrame.setTitle(TamaName + frameTitle);
 		GUIFrame.setBounds(100, 100, 669, 366);
 		GUIFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GUIFrame.getContentPane().setLayout(null);

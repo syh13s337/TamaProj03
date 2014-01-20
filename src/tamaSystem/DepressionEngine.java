@@ -22,9 +22,11 @@ public class DepressionEngine implements Runnable {
 	private int mouseHappiness = 50;
 	private int mouseHappinessSinker = 10;
 	private Random intGenerator = new Random();
-	
+
 	//Depression, Thread sleep timer.
 	protected final int depressionBuilderTimeValue = 1000;
+	
+	private boolean deathByDepression = false;
 
 	public DepressionEngine(){
 	}
@@ -40,10 +42,10 @@ public class DepressionEngine implements Runnable {
 			TamaRandomGoodMood();
 			TamaRandomDepression();
 			depressionBuilder(depressionBuilderTimeValue);
-			dieByDepression();
+			deathByDepression();
 		}
 	}
-	
+
 	//Random generate depression for Tama for lv 3
 	private void TamaRandomDepression(){
 		if(TamaGUI.gameLevel == 3){
@@ -55,17 +57,17 @@ public class DepressionEngine implements Runnable {
 			}
 		}
 	}
-	
+
 	//Random generate, good mood for tama
 	private void TamaRandomGoodMood(){
-			int rndNr = intGenerator.nextInt(30);
-			if (rndNr == 5){
-				happinessGainedLv0();
-				TamaGUI.textArea.setText("Your Tama is in a good mood" 
-				+ "\nGained 600 Happiness");
-			}
+		int rndNr = intGenerator.nextInt(30);
+		if (rndNr == 5){
+			happinessGainedLv0();
+			TamaGUI.textArea.setText("Your Tama is in a good mood" 
+					+ "\nGained 600 Happiness");
 		}
-	
+	}
+
 	//Thread Sleeper engine, 
 	private void depressionBuilder(int x){
 		tamaCurrentDepression -= depressionValue;
@@ -122,10 +124,11 @@ public class DepressionEngine implements Runnable {
 	}
 
 	//When Tama reach 0 depression
-	private void dieByDepression() {
+	//
+	// CHANGE SYSTEM
+	private void deathByDepression() {
 		if (tamaCurrentDepression <= 0){
-			WinAndEndEngine waee = new WinAndEndEngine();
-			waee.deathByDepression();
+			deathByDepression = true;
 		}
 	}
 
@@ -161,5 +164,8 @@ public class DepressionEngine implements Runnable {
 		tamaCurrentDepression -= mouseHappinessSinker;
 	}
 
+	public boolean isDeathByDepression() {
+		return deathByDepression;
+	}
 
 }

@@ -22,8 +22,7 @@ import java.awt.event.ActionEvent;
 
 public class TamaGUIStart {
 
-	//STATIC, The Tama name, and the Loop thread boolean to stop all threads.
-	public static String TAMA_NAME = "";
+	private String tamaName = "";
 	public static boolean ALL_THREADS_RUNNING = true;
 
 	public JFrame frmTamav;
@@ -105,10 +104,10 @@ public class TamaGUIStart {
 		btnStartLv1.setToolTipText("(Easy) Baby Mode");
 		btnStartLv1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				TAMA_NAME = txtEnterTamaName.getText();	
-				if(!TAMA_NAME.equals("Enter Tama name, and pick level! ")) {
-					TAMA_NAME = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(1, " : Baby (EasyMode)");
+				tamaName = txtEnterTamaName.getText();	
+				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
+					tamaName = txtEnterTamaName.getText();
+					TamaGUI window = new TamaGUI(1, " : Baby (EasyMode)", tamaName);
 					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
 				}
@@ -124,10 +123,10 @@ public class TamaGUIStart {
 		btnStartLv2.setToolTipText("(Normal) Kid Mode");
 		btnStartLv2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				TAMA_NAME = txtEnterTamaName.getText();	
-				if(!TAMA_NAME.equals("Enter Tama name, and pick level! ")) {
-					TAMA_NAME = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(2, " : The Kid (NormalMode)");
+				tamaName = txtEnterTamaName.getText();	
+				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
+					tamaName = txtEnterTamaName.getText();
+					TamaGUI window = new TamaGUI(2, " : The Kid (NormalMode)", tamaName);
 					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
 				}
@@ -142,10 +141,10 @@ public class TamaGUIStart {
 		JButton btnStartLv3 = new JButton("Start Lv3");
 		btnStartLv3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				TAMA_NAME = txtEnterTamaName.getText();	
-				if(!TAMA_NAME.equals("Enter Tama name, and pick level! ")) {
-					TAMA_NAME = txtEnterTamaName.getText();
-					TamaGUI window = new TamaGUI(3, " : Young Adult (HardMode)");
+				tamaName = txtEnterTamaName.getText();	
+				if(!tamaName.equals("Enter Tama name, and pick level! ")) {
+					tamaName = txtEnterTamaName.getText();
+					TamaGUI window = new TamaGUI(3, " : Young Adult (HardMode)", tamaName);
 					window.GUIFrame.setVisible(true);
 					frmTamav.setVisible(false);
 				}
@@ -204,5 +203,9 @@ public class TamaGUIStart {
 		btnAbout.setToolTipText("Information about the game");
 		btnAbout.setBounds(12, 213, 97, 25);
 		frmTamav.getContentPane().add(btnAbout);
+	}
+
+	public String getTamaName() {
+		return tamaName;
 	}
 }

@@ -7,16 +7,11 @@ package tamaStart;
  * 
  */
 
-
 import tamaGUI.TamaGUIStart;
 
 public class TamaStartClass {
 
 	public static void main(String[] args) {
-		gameStarter();
-	}
-
-	private static void gameStarter(){
 		TamaGUIStart tsg = new TamaGUIStart();
 		tsg.frmTamav.setVisible(true);
 	}

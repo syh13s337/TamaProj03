@@ -35,7 +35,7 @@ public class HungerEngine implements Runnable  {
 	private final int foodDeacreses3 = -3000;
 	private Random intGenerator = new Random();
 
-	TamaGUIEnd te = new TamaGUIEnd();
+	private boolean deathByHunger = false;
 
 	public HungerEngine(){
 	}
@@ -43,7 +43,6 @@ public class HungerEngine implements Runnable  {
 	//The loop
 	@Override
 	public void run() {
-		
 		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
 			hungerBarMethod();
 			hungerWarnings();
@@ -64,7 +63,7 @@ public class HungerEngine implements Runnable  {
 			}
 		}
 	}
-	
+
 	//HungerBar method/Checker updater
 	private void hungerBarMethod(){
 		TamaGUI.hungerBar.setString("Hunger: " + Integer.toString(tamaCurrentHunger));
@@ -166,12 +165,12 @@ public class HungerEngine implements Runnable  {
 		return getTamaCurrentHunger;
 	}
 
+	//CHANGE SYSTEM
+	//
 	//Method for when the Tama dies by hunger
 	private void dieByHunger(){
 		if (tamaCurrentHunger <= 0){
-			TamaGUIStart.ALL_THREADS_RUNNING = false;
-			WinAndEndEngine waee = new WinAndEndEngine();
-			waee.deathByHunger();
+			deathByHunger = true;
 		}
 	}
 
@@ -203,4 +202,9 @@ public class HungerEngine implements Runnable  {
 	public void foodDecreases3(){
 		tamaCurrentHunger += foodDeacreses3;
 	}
+	
+	public boolean isDeathByHunger() {
+		return deathByHunger;
+	}
+
 }
