@@ -17,7 +17,6 @@ import javax.swing.JProgressBar;
 import tamaDialogs.DialogEngine;
 import tamaDialogs.TalkingToTamaEngine;
 import tamaSystem.DepressionEngine;
-import tamaSystem.GameEngine;
 import tamaSystem.HungerEngine;
 import tamaSystem.MoneyEngine;
 import tamaSystem.ScoreEngine;
@@ -37,44 +36,70 @@ public class TamaGUI extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 
 	//STATIC variables, so everyone can touch them for upgrade/graphic purpose.
-	public static JFrame GUIFrame;
+	public JFrame GUIFrame;
 	public static JLabel label;
 	public static TextArea textArea;
-	public static JProgressBar hungerBar;
-	public static JProgressBar moneyBar;
-	public static int gameLevel;
+	private int gameLevel;
+	private JProgressBar hungerBar;
+	private JProgressBar moneyBar;
 	private JProgressBar depressionBar;
 
 	private TextField textInPut;
 	private ArrayList <String> buttonNames = new ArrayList<String>();
 	private ArrayList <String> tooltips = new ArrayList<String>();
 	private ArrayList <String> infoText = new ArrayList<String>();
+
+	private int deppresionValue;
+	private int moneyValue;
+	private int hungerValue;
+
+	private int moneyMouseCounter = 0;
+	public void setMoneyMouseCounter(int moneyMouseCounter) {
+		this.moneyMouseCounter = moneyMouseCounter;
+	}
+	public int getMoneyMouseCounter() {
+		return moneyMouseCounter;
+	}
 	
+	private int mouseHappinessSinker = 0;
+	public int getMouseHappinessSinker() {
+		return mouseHappinessSinker;
+	}
+	public void setMouseHappinessSinker(int mouseHappinessSinker) {
+		this.mouseHappinessSinker = mouseHappinessSinker;
+	}
+
+	private int mouseGainHappiness = 0;
+	public int getMouseGainHappiness() {
+		return mouseGainHappiness;
+	}
+	public void setMouseGainHappiness(int mouseGainHappiness) {
+		this.mouseGainHappiness = mouseGainHappiness;
+	}
+
+	private MoneyEngine mo;
 	private HungerEngine he;
 	private DepressionEngine de;
 	private DialogEngine di = new DialogEngine();
 	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
-	private MoneyEngine mo = new MoneyEngine();
 	private ScoreEngine se = new ScoreEngine();
 
 	public TamaGUI(int lvNr, String frameTitle, String tamaName) {
-		TamaGUI.gameLevel = lvNr;
+		gameLevel = lvNr;
 		buttonNames(lvNr);
 		initialize(frameTitle, tamaName);
 		di.setDialogLevel(lvNr);
 		tt.setDialogLevel(lvNr);
 
 		Thread diaEngine = new Thread(di, "DialogThread");
-		Thread monEngine = new Thread(mo, "MoneyThead");
 		Thread scoEngine = new Thread(se, "ScoreThread");
 
 		diaEngine.start();
-		monEngine.start();
 		scoEngine.start();
 	}
-	
+
 	public TamaGUI(){
-		
+
 	}
 
 	private void initialize(String frameTitle, String TamaName) {
@@ -175,7 +200,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 				}						
 
 				else if (gameLevel >= 2){
-					if (mo.currentMoney >= 3500){
+					if (moneyValue >= 3500){
 						he.foodDecreases3();
 						mo.moneyItem3();
 						de.happinessGainedLv2();
@@ -186,7 +211,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(3));
 					}						
-					else if(mo.currentMoney <= 3500) {
+					else if(moneyValue <= 3500) {
 						textArea.setText("You don't have money for it!\n");
 					}
 				}
@@ -200,7 +225,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 		btnFood1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (gameLevel == 1){
-					if (mo.currentMoney >= 500){
+					if (moneyValue >= 500){
 						he.foodItem1();
 						mo.moneyItem1();
 						de.happinessGainedLv1();
@@ -211,12 +236,12 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(5));
 					}						
-					else if(mo.currentMoney <= 500) {
+					else if(moneyValue <= 500) {
 						textArea.setText("You don't have money for it!\n");
 					}	
 				}
 				else if (gameLevel >= 2){
-					if (mo.currentMoney >= 500){
+					if (moneyValue >= 500){
 						he.foodItem1();
 						mo.moneyItem1();
 						de.happinessLevel2();
@@ -227,7 +252,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(5));
 					}						
-					else if(mo.currentMoney <= 500) {
+					else if(moneyValue <= 500) {
 						textArea.setText("You don't have money for it!\n");
 					}					
 				}
@@ -241,7 +266,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 		btnFood2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (gameLevel == 1){
-					if (mo.currentMoney >= 2000){
+					if (moneyValue >= 2000){
 						he.foodItem2();
 						mo.moneyItem2();
 						de.happinessGainedLv1();
@@ -252,12 +277,12 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(6));
 					}				
-					else if(mo.currentMoney <= 2000) {
+					else if(moneyValue <= 2000) {
 						textArea.setText("You don't have money for it!\n");
 					}
 				}
 				else if (gameLevel >= 2){
-					if (mo.currentMoney >= 2000){
+					if (moneyValue >= 2000){
 						he.foodItem2();
 						mo.moneyItem2();
 						de.happinessGainedLv1();
@@ -268,7 +293,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(6));
 					}				
-					else if(mo.currentMoney <= 2000) {
+					else if(moneyValue <= 2000) {
 						textArea.setText("You don't have money for it!\n");
 					}
 				}
@@ -282,7 +307,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 		btnFood3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (gameLevel == 1){
-					if (mo.currentMoney >= 3500){
+					if (moneyValue >= 3500){
 						he.foodItem3();
 						mo.moneyItem3();
 						de.happinessLevel2();
@@ -293,12 +318,12 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(7));
 					}
-					else if(mo.currentMoney <= 3500) {
+					else if(moneyValue <= 3500) {
 						textArea.setText("You don't have money for it!\n");
 					}
 				}
 				else if (gameLevel >= 2){
-					if (mo.currentMoney >= 3500){
+					if (moneyValue >= 3500){
 						he.foodItem3();
 						mo.moneyItem3();
 						de.happinessLevel2();
@@ -309,7 +334,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 						}
 						textArea.setText(infoText.get(7));
 					}
-					else if(mo.currentMoney <= 3500) {
+					else if(moneyValue <= 3500) {
 						textArea.setText("You don't have money for it!\n");
 					}
 				}
@@ -385,8 +410,9 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 	}
 
-	//sets and updates DepressionBar
+	//sets and updates DepressionBar, trigged by GameEngine
 	public void setDepressionBar(int deppresionValue){
+		this.deppresionValue = deppresionValue;
 		depressionBar.setString("Happiness: " + Integer.toString(deppresionValue));
 
 		if (deppresionValue >= 9000){
@@ -429,31 +455,121 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 		}
 		else if(deppresionValue >= 1500){
-			depressionBar.setForeground(Color.PINK);
+
 			depressionBar.setValue(5);
 
 		}
 		else if(deppresionValue >= 1000){
-			depressionBar.setForeground(Color.RED);
+
 			depressionBar.setValue(0);
 		}
 
 	}
 
+	//sets and updates moneyBar, trigged by GameEngine
+	public void setMoneyBar(int moneyValue){
+		this.moneyValue = moneyValue;
+		moneyBar.setString(Integer.toString(moneyValue) + " Pesoh");
+		moneyBar.setForeground(Color.BLUE);
+
+		if(moneyValue <= 0){
+			moneyBar.setValue(0);
+		}
+		else if(moneyValue <= 1000){
+			moneyBar.setValue(10);
+		}
+
+		else if(moneyValue <= 2500){
+			moneyBar.setValue(25);
+		}
+
+		else if(moneyValue <= 3500){
+			moneyBar.setValue(35);
+		}
+		else if(moneyValue <= 5000){
+			moneyBar.setValue(50);
+		}
+		else if (moneyValue <= 7500){
+			moneyBar.setValue(75);
+		}
+		else if (moneyValue <= 9000){
+			moneyBar.setValue(90);
+		}
+		else if (moneyValue <= 10000){
+			moneyBar.setValue(10000);
+		}
+
+	}
+	
+	//sets and updates hungerBar, trigged by GameEngine
+	public void setHungerBar(int hungerValue){
+		this.hungerValue = hungerValue;
+		hungerBar.setString("Hunger: " + Integer.toString(hungerValue));
+		if(hungerValue >= 9000){
+			hungerBar.setValue(100);
+			hungerBar.setForeground(new Color(0, 128, 0));
+		}		
+		else if (hungerValue >= 8500){
+			hungerBar.setValue(85);
+			hungerBar.setForeground(new Color(0, 128, 0));
+		}	
+		else if (hungerValue >= 7500){
+			hungerBar.setValue(75);
+			hungerBar.setForeground(new Color(0, 128, 0));
+		}
+		else if (hungerValue >= 5000){
+			hungerBar.setForeground(Color.ORANGE);
+			hungerBar.setValue(60);
+		}		
+		else if(hungerValue >= 4000){
+			hungerBar.setForeground(Color.ORANGE);
+			hungerBar.setValue(50);
+		}
+		else if(hungerValue >= 2500){
+			hungerBar.setForeground(Color.ORANGE);
+			hungerBar.setValue(30);
+		}		
+		else if(hungerValue >= 2500){
+			hungerBar.setForeground(Color.ORANGE);
+			hungerBar.setValue(30);
+		}		
+		else if(hungerValue >= 2000){
+			hungerBar.setForeground(Color.RED);
+			hungerBar.setValue(20);
+		}	
+		else if(hungerValue >= 1500){
+			hungerBar.setForeground(Color.RED);
+			hungerBar.setValue(10);
+		}
+		else if(hungerValue >= 1000){
+			hungerBar.setForeground(Color.PINK);
+			hungerBar.setValue(10);
+		}		
+		else if (hungerValue >= 500){
+			hungerBar.setForeground(Color.RED);
+			hungerBar.setValue(10);
+		}
+		else if (hungerValue >= 500){
+			hungerBar.setForeground(Color.PINK);
+			hungerBar.setValue(10);
+		}
+	}
+
+
 	//Tama gets happiness by clicking in frame
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		de.mouseHappiness();
+		mouseGainHappiness++;
 	}
 	//player gain money while entering frame
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		mo.moneyGain1();
+		moneyMouseCounter++;
 	}
 	//tama get depressed when mouse exits the Frame
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		de.mouseHappinessSinker();
+		mouseHappinessSinker++;
 	}
 
 	@Override

@@ -22,8 +22,9 @@ public class HungerEngine implements Runnable  {
 	//
 	//Note: In case future upgrade/change the varible is here.
 	//
-	public static int tamaCurrentHunger = 10000;
+	private int tamaCurrentHunger = 10000;
 	private int hungerValue = 30;
+
 	//HungerBuilder, Thread sleep timer.
 	private final int hungerBuilderTimeValue = 1000;
 	//Food/energi Value:
@@ -34,8 +35,18 @@ public class HungerEngine implements Runnable  {
 	private final int foodDeacreses2 = -1500;
 	private final int foodDeacreses3 = -3000;
 	private Random intGenerator = new Random();
-
 	private boolean deathByHunger = false;
+
+	private int gameLevel;
+	public int getGameLevel() {
+		return gameLevel;
+	}
+
+	public void setGameLevel(int gameLevel) {
+		this.gameLevel = gameLevel;
+	}
+
+
 
 	public HungerEngine(){
 	}
@@ -44,7 +55,6 @@ public class HungerEngine implements Runnable  {
 	@Override
 	public void run() {
 		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
-			hungerBarMethod();
 			hungerWarnings();
 			TamaEatsAtFriend();
 			hungerBuilder(hungerBuilderTimeValue);
@@ -54,7 +64,7 @@ public class HungerEngine implements Runnable  {
 
 	//Random generate, Tama eats at a friend
 	private void TamaEatsAtFriend(){
-		if(TamaGUI.gameLevel >= 2){
+		if(gameLevel >= 2){
 			int rndNr = intGenerator.nextInt(32);
 			if (rndNr == 5){
 				foodItem1();
@@ -62,60 +72,6 @@ public class HungerEngine implements Runnable  {
 						+ "\nGained 500 Energy");
 			}
 		}
-	}
-
-	//HungerBar method/Checker updater
-	private void hungerBarMethod(){
-		TamaGUI.hungerBar.setString("Hunger: " + Integer.toString(tamaCurrentHunger));
-		if(tamaCurrentHunger >= 9000){
-			TamaGUI.hungerBar.setValue(100);
-			TamaGUI.hungerBar.setForeground(new Color(0, 128, 0));
-		}		
-		else if (tamaCurrentHunger >= 8500){
-			TamaGUI.hungerBar.setValue(85);
-			TamaGUI.hungerBar.setForeground(new Color(0, 128, 0));
-		}	
-		else if (tamaCurrentHunger >= 7500){
-			TamaGUI.hungerBar.setValue(75);
-			TamaGUI.hungerBar.setForeground(new Color(0, 128, 0));
-		}
-		else if (tamaCurrentHunger >= 5000){
-			TamaGUI.hungerBar.setForeground(Color.ORANGE);
-			TamaGUI.hungerBar.setValue(60);
-		}		
-		else if(tamaCurrentHunger >= 4000){
-			TamaGUI.hungerBar.setForeground(Color.ORANGE);
-			TamaGUI.hungerBar.setValue(50);
-		}
-		else if(tamaCurrentHunger >= 2500){
-			TamaGUI.hungerBar.setForeground(Color.ORANGE);
-			TamaGUI.hungerBar.setValue(30);
-		}		
-		else if(tamaCurrentHunger >= 2500){
-			TamaGUI.hungerBar.setForeground(Color.ORANGE);
-			TamaGUI.hungerBar.setValue(30);
-		}		
-		else if(tamaCurrentHunger >= 2000){
-			TamaGUI.hungerBar.setForeground(Color.RED);
-			TamaGUI.hungerBar.setValue(20);
-		}	
-		else if(tamaCurrentHunger >= 1500){
-			TamaGUI.hungerBar.setForeground(Color.RED);
-			TamaGUI.hungerBar.setValue(10);
-		}
-		else if(tamaCurrentHunger >= 1000){
-			TamaGUI.hungerBar.setForeground(Color.PINK);
-			TamaGUI.hungerBar.setValue(10);
-		}		
-		else if (tamaCurrentHunger >= 500){
-			TamaGUI.hungerBar.setForeground(Color.RED);
-			TamaGUI.hungerBar.setValue(10);
-		}
-		else if (tamaCurrentHunger >= 500){
-			TamaGUI.hungerBar.setForeground(Color.PINK);
-			TamaGUI.hungerBar.setValue(10);
-		}
-
 	}
 
 	//Thread Sleeper engine, 
@@ -129,7 +85,7 @@ public class HungerEngine implements Runnable  {
 	}
 
 	//Get hunger level/meter
-	public String getTamaCurrentHunger(){
+	public String tamaHungerTeller(){
 		String getTamaCurrentHunger = null;
 
 		if(tamaCurrentHunger >= 9000){
@@ -202,9 +158,18 @@ public class HungerEngine implements Runnable  {
 	public void foodDecreases3(){
 		tamaCurrentHunger += foodDeacreses3;
 	}
-	
+
 	public boolean isDeathByHunger() {
 		return deathByHunger;
 	}
+	//GET hunger
+	public int getTamaCurrentHunger() {
+		return tamaCurrentHunger;
+	}
+	//SET hunger
+	public void setTamaCurrentHunger(int tamaCurrentHunger) {
+		this.tamaCurrentHunger = tamaCurrentHunger;
+	}
+
 
 }

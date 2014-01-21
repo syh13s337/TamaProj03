@@ -19,15 +19,24 @@ public class DepressionEngine implements Runnable {
 	//
 	private int tamaCurrentDepression = 10000;
 	private int depressionValue = 20;
-	private int mouseHappiness = 50;
-	private int mouseHappinessSinker = 10;
+	private int mouseHappiness = 20;
+	private int mouseHappinessSinker = 20;
 	private Random intGenerator = new Random();
 
 	//Depression, Thread sleep timer.
 	protected final int depressionBuilderTimeValue = 1000;
-
 	private boolean deathByDepression = false;
 
+	private int gameLevel;
+	public int getGameLevel() {
+		return gameLevel;
+	}
+	public void setGameLevel(int gameLevel) {
+		gameLevel = gameLevel;
+	}
+	
+	
+	
 	public DepressionEngine(){
 	}
 
@@ -35,7 +44,6 @@ public class DepressionEngine implements Runnable {
 	@Override
 	public void run() {
 		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
-			depressionBarMethod();
 			depressionWarnings();
 			TamaRandomGoodMood();
 			TamaRandomDepression();
@@ -46,7 +54,7 @@ public class DepressionEngine implements Runnable {
 
 	//Random generate depression for Tama for lv 3
 	private void TamaRandomDepression(){
-		if(TamaGUI.gameLevel == 3){
+		if(gameLevel == 3){
 			int rndNr = intGenerator.nextInt(32);
 			if (rndNr == 5){
 				happinessLevel1();
@@ -74,13 +82,6 @@ public class DepressionEngine implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-
-	//DONT NEED THIS METHOD??
-	//HungerBar method/Checker updater. 
-	private void depressionBarMethod(){
-
-
 	}
 
 	//When Tama reach 0 depression
