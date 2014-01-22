@@ -25,6 +25,7 @@ public class TamaGUIFace extends JComponent implements Runnable {
 	private ArrayList <ImageIcon> faces;
 	private int depresionValue;
 	private int hungerValue;
+	private TamaGUI tg;
 	private int gameLevel;
 	public int getGameLevel() {
 		return gameLevel;
@@ -48,10 +49,10 @@ public class TamaGUIFace extends JComponent implements Runnable {
 					y = 7;
 				}
 				if (depresionValue <= 3000 || hungerValue <= 3000 ){
-					TamaGUI.label.setIcon(faces.get(y));
+					tg.label.setIcon(faces.get(y));
 					y++;
 				}else{
-					TamaGUI.label.setIcon(faces.get(x));
+					tg.label.setIcon(faces.get(x));
 					x++;
 				}
 				Thread.sleep(3000);
@@ -62,7 +63,8 @@ public class TamaGUIFace extends JComponent implements Runnable {
 		}
 	}
 
-	public TamaGUIFace(){
+	public TamaGUIFace(TamaGUI tg){
+		this.tg = tg;
 	}
 
 	//load pics

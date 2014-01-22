@@ -1,5 +1,10 @@
 package tamaSystem;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import tamaDialogs.DialogEngine;
+import tamaDialogs.TalkingToTamaEngine;
 import tamaGUI.TamaGUI;
 import tamaGUI.TamaGUIFace;
 import tamaGUI.TamaGUIStart;
@@ -12,32 +17,45 @@ import tamaGUI.TamaGUIStart;
  *
  */
 
-public class GameEngine implements Runnable {
-
+public class GameEngine implements Runnable{
 
 	private WinAndEndEngine we = new WinAndEndEngine();
 	private DepressionEngine de = new DepressionEngine();
 	private HungerEngine he = new HungerEngine();
-	private TamaGUIFace tgf = new TamaGUIFace();
+	private TamaGUIFace tgf;
 	private TamaGUI tg = new TamaGUI();
 	private MoneyEngine mo = new MoneyEngine();
-
-	private Thread depEngine = new Thread(de, "DepressionThread");
-	private Thread winEngine = new Thread(we, "WinThread");
-	private Thread hunEngine = new Thread(he, "FoodThread");
-	private Thread monEngine = new Thread(mo, "MoneyThead");
-	private Thread faceEngine = new Thread(tgf, "FaceThread");
+	private DialogEngine di = new DialogEngine();
+	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
+	private ScoreEngine se = new ScoreEngine();
 
 	private String tamaName = "";
 	private int gameLevel;
 
 	private void initiater(){
+		tgf = new TamaGUIFace(tg);
+		
+		Thread depEngine = new Thread(de, "DepressionThread");
+		Thread winEngine = new Thread(we, "WinThread");
+		Thread hunEngine = new Thread(he, "FoodThread");
+		Thread monEngine = new Thread(mo, "MoneyThead");
+		Thread faceEngine = new Thread(tgf, "FaceThread");
+		Thread diaEngine = new Thread(di, "DialogThread");
+		Thread scoEngine = new Thread(se, "ScoreThread");
+
+		diaEngine.start();
+		scoEngine.start();
 		depEngine.start();
 		winEngine.start();
 		hunEngine.start();
 		monEngine.start();
 		faceEngine.start();
 	}
+
+	public GameEngine(){
+
+	}
+
 
 	private void deathAndWinChecker(String tamanName){
 		if (de.isDeathByDepression() == true){
@@ -92,7 +110,7 @@ public class GameEngine implements Runnable {
 		he.setGameLevel(gameLevel);
 		mo.setGameLevel(gameLevel);
 
-		tg = new TamaGUI(gameLevel, frameTitle, tamaName);
+		tg = new TamaGUI(gameLevel, frameTitle, tamaName, he, mo, di, tt, de);
 		tg.GUIFrame.setVisible(true);
 	}
 
@@ -125,3 +143,5 @@ public class GameEngine implements Runnable {
 	}
 
 }
+
+

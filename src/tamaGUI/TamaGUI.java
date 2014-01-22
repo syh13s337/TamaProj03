@@ -19,7 +19,6 @@ import tamaDialogs.TalkingToTamaEngine;
 import tamaSystem.DepressionEngine;
 import tamaSystem.HungerEngine;
 import tamaSystem.MoneyEngine;
-import tamaSystem.ScoreEngine;
 
 /** TAMA GUI, the game GUI
  * This is the Main game GUI Class,
@@ -37,7 +36,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 	//STATIC variables, so everyone can touch them for upgrade/graphic purpose.
 	public JFrame GUIFrame;
-	public static JLabel label;
+	public JLabel label;
 	public static TextArea textArea;
 	private int gameLevel;
 	private JProgressBar hungerBar;
@@ -53,6 +52,12 @@ public class TamaGUI extends JFrame implements MouseListener {
 	private int moneyValue;
 	private int hungerValue;
 
+	public JButton btnPlay1;
+	public JButton btnPlay2;
+	public JButton btnFood1;
+	public JButton btnFood2;
+	public JButton btnFood3;
+
 	private int moneyMouseCounter = 0;
 	public void setMoneyMouseCounter(int moneyMouseCounter) {
 		this.moneyMouseCounter = moneyMouseCounter;
@@ -60,7 +65,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 	public int getMoneyMouseCounter() {
 		return moneyMouseCounter;
 	}
-	
+
 	private int mouseHappinessSinker = 0;
 	public int getMouseHappinessSinker() {
 		return mouseHappinessSinker;
@@ -77,35 +82,33 @@ public class TamaGUI extends JFrame implements MouseListener {
 		this.mouseGainHappiness = mouseGainHappiness;
 	}
 
-	private MoneyEngine mo;
-	private HungerEngine he;
 	private DepressionEngine de;
-	private DialogEngine di = new DialogEngine();
-	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
-	private ScoreEngine se = new ScoreEngine();
+	private HungerEngine he;
+	private MoneyEngine mo;
+	private DialogEngine di;
+	private TalkingToTamaEngine tt;
 
-	public TamaGUI(int lvNr, String frameTitle, String tamaName) {
+	//A constructor that takes variables and objects, so it dosent need to open new once.
+	public TamaGUI(int lvNr, String frameTitle, String tamaName, HungerEngine he, MoneyEngine mo,
+			DialogEngine di, TalkingToTamaEngine tt, DepressionEngine de) {
 		gameLevel = lvNr;
 		buttonNames(lvNr);
 		initialize(frameTitle, tamaName);
 		di.setDialogLevel(lvNr);
 		tt.setDialogLevel(lvNr);
 
-		Thread diaEngine = new Thread(di, "DialogThread");
-		Thread scoEngine = new Thread(se, "ScoreThread");
+		this.he = he;
+		this.mo = mo;
+		this.di = di;
+		this.tt = tt;
+		this.de = de;
 
-		diaEngine.start();
-		scoEngine.start();
 	}
 
 	public TamaGUI(){
-
 	}
 
 	private void initialize(String frameTitle, String TamaName) {
-		he = new HungerEngine();
-		de = new DepressionEngine();
-
 		GUIFrame = new JFrame();
 		GUIFrame.getContentPane().setBackground(Color.WHITE);
 		GUIFrame.setResizable(false);
@@ -157,187 +160,51 @@ public class TamaGUI extends JFrame implements MouseListener {
 		GUIFrame.add(label);	
 
 		//play level 1 button
-		final JButton btnPlay1 = new JButton(buttonNames.get(0));
+		btnPlay1 = new JButton(buttonNames.get(0));
 		btnPlay1.setToolTipText(tooltips.get(0));
 		btnPlay1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (gameLevel == 1){
-					de.happinessGainedLv2();
-					textArea.setText(infoText.get(0));
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e1) {
-					}
-					textArea.setText(infoText.get(1));
-				}
-				else if (gameLevel >= 2){
-					he.foodDecreases1();
-					de.happinessGainedLv2();
-					textArea.setText(infoText.get(0));
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e1) {
-					}
-					textArea.setText(infoText.get(1));
-				}
+				buttonPlay1();
 			}
 		});
 		btnPlay1.setBounds(15, 47, 115, 29);
 		GUIFrame.getContentPane().add(btnPlay1);
 
-		final JButton btnPlay2 = new JButton(buttonNames.get(1));
+		btnPlay2 = new JButton(buttonNames.get(1));
 		btnPlay2.setToolTipText(tooltips.get(1));
 		btnPlay2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLevel == 1){
-					de.happinessGainedLv2();
-					textArea.setText(infoText.get(2));
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e1) {
-					}
-					textArea.setText(infoText.get(3));
-				}						
-
-				else if (gameLevel >= 2){
-					if (moneyValue >= 3500){
-						he.foodDecreases3();
-						mo.moneyItem3();
-						de.happinessGainedLv2();
-						textArea.setText(infoText.get(2));
-						try {
-							Thread.sleep(3000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(3));
-					}						
-					else if(moneyValue <= 3500) {
-						textArea.setText("You don't have money for it!\n");
-					}
-				}
+				buttonPlay2();
 			}
 		});
 		btnPlay2.setBounds(15, 87, 115, 29);
 		GUIFrame.getContentPane().add(btnPlay2);
 
-		final JButton btnFood1 = new JButton(buttonNames.get(2));
+		btnFood1 = new JButton(buttonNames.get(2));
 		btnFood1.setToolTipText(tooltips.get(2));
 		btnFood1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLevel == 1){
-					if (moneyValue >= 500){
-						he.foodItem1();
-						mo.moneyItem1();
-						de.happinessGainedLv1();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(5));
-					}						
-					else if(moneyValue <= 500) {
-						textArea.setText("You don't have money for it!\n");
-					}	
-				}
-				else if (gameLevel >= 2){
-					if (moneyValue >= 500){
-						he.foodItem1();
-						mo.moneyItem1();
-						de.happinessLevel2();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(5));
-					}						
-					else if(moneyValue <= 500) {
-						textArea.setText("You don't have money for it!\n");
-					}					
-				}
+				buttonFood1();
 			}
 		});
 		btnFood1.setBounds(15, 172, 115, 29);
 		GUIFrame.getContentPane().add(btnFood1);
 
-		final JButton btnFood2 = new JButton(buttonNames.get(3));
+		btnFood2 = new JButton(buttonNames.get(3));
 		btnFood2.setToolTipText(tooltips.get(3));
 		btnFood2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLevel == 1){
-					if (moneyValue >= 2000){
-						he.foodItem2();
-						mo.moneyItem2();
-						de.happinessGainedLv1();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(6));
-					}				
-					else if(moneyValue <= 2000) {
-						textArea.setText("You don't have money for it!\n");
-					}
-				}
-				else if (gameLevel >= 2){
-					if (moneyValue >= 2000){
-						he.foodItem2();
-						mo.moneyItem2();
-						de.happinessGainedLv1();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(6));
-					}				
-					else if(moneyValue <= 2000) {
-						textArea.setText("You don't have money for it!\n");
-					}
-				}
+				buttonFood2();
 			}
 		});
 		btnFood2.setBounds(15, 213, 115, 29);
 		GUIFrame.getContentPane().add(btnFood2);
 
-		final JButton btnFood3 = new JButton(buttonNames.get(4));
+		btnFood3 = new JButton(buttonNames.get(4));
 		btnFood3.setToolTipText(tooltips.get(4));
 		btnFood3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLevel == 1){
-					if (moneyValue >= 3500){
-						he.foodItem3();
-						mo.moneyItem3();
-						de.happinessLevel2();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(7));
-					}
-					else if(moneyValue <= 3500) {
-						textArea.setText("You don't have money for it!\n");
-					}
-				}
-				else if (gameLevel >= 2){
-					if (moneyValue >= 3500){
-						he.foodItem3();
-						mo.moneyItem3();
-						de.happinessLevel2();
-						textArea.setText(infoText.get(4));
-						try {
-							Thread.sleep(2000);
-						} catch (InterruptedException e1) {
-						}
-						textArea.setText(infoText.get(7));
-					}
-					else if(moneyValue <= 3500) {
-						textArea.setText("You don't have money for it!\n");
-					}
-				}
+				buttonFood3();
 			}
 		});
 		btnFood3.setBounds(15, 255, 115, 29);
@@ -500,7 +367,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 
 	}
-	
+
 	//sets and updates hungerBar, trigged by GameEngine
 	public void setHungerBar(int hungerValue){
 		this.hungerValue = hungerValue;
@@ -556,6 +423,123 @@ public class TamaGUI extends JFrame implements MouseListener {
 	}
 
 
+	public void buttonPlay1(){
+		if (gameLevel == 1){
+			de.happinessGainedLv2();
+			textArea.setText(infoText.get(0));
+			textArea.setText(infoText.get(1));
+
+		}
+		else if (gameLevel >= 2){
+			he.foodDecreases1();
+			de.happinessGainedLv2();
+			textArea.setText(infoText.get(0));
+			textArea.setText(infoText.get(1));
+		}
+	}
+
+	private void buttonPlay2(){
+		if (gameLevel == 1){
+			de.happinessGainedLv2();
+			textArea.setText(infoText.get(2));
+			textArea.setText(infoText.get(3));
+		}						
+
+		else if (gameLevel >= 2){
+			if (moneyValue >= 3500){
+				he.foodDecreases3();
+				mo.moneyItem3();
+				de.happinessGainedLv2();
+				textArea.setText(infoText.get(2));
+				textArea.setText(infoText.get(3));
+			}						
+			else if(moneyValue <= 3500) {
+				textArea.setText("You don't have money for it!\n");
+			}
+		}
+	}
+
+	private void buttonFood1(){
+		if (gameLevel == 1){
+			if (moneyValue >= 500){
+				getClass();
+				mo.moneyItem1();
+				de.happinessGainedLv1();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(5));
+			}						
+			else if(moneyValue <= 500) {
+				textArea.setText("You don't have money for it!\n");
+			}	
+		}
+		else if (gameLevel >= 2){
+			if (moneyValue >= 500){
+				he.foodItem1();
+				mo.moneyItem1();
+				de.happinessLevel2();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(5));
+			}						
+			else if(moneyValue <= 500) {
+				textArea.setText("You don't have money for it!\n");
+			}					
+		}
+	}
+
+
+	private void buttonFood2(){
+		if (gameLevel == 1){
+			if (moneyValue >= 2000){
+				he.foodItem2();
+				mo.moneyItem2();
+				de.happinessGainedLv1();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(6));
+			}				
+			else if(moneyValue <= 2000) {
+				textArea.setText("You don't have money for it!\n");
+			}
+		}
+		else if (gameLevel >= 2){
+			if (moneyValue >= 2000){
+				he.foodItem2();
+				mo.moneyItem2();
+				de.happinessGainedLv1();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(6));
+			}				
+			else if(moneyValue <= 2000) {
+				textArea.setText("You don't have money for it!\n");
+			}
+		}
+	}
+
+	private void buttonFood3(){
+		if (gameLevel == 1){
+			if (moneyValue >= 3500){
+				he.foodItem3();
+				mo.moneyItem3();
+				de.happinessLevel2();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(7));
+			}
+			else if(moneyValue <= 3500) {
+				textArea.setText("You don't have money for it!\n");
+			}
+		}
+		else if (gameLevel >= 2){
+			if (moneyValue >= 3500){
+				he.foodItem3();
+				mo.moneyItem3();
+				de.happinessLevel2();
+				textArea.setText(infoText.get(4));
+				textArea.setText(infoText.get(7));
+			}
+			else if(moneyValue <= 3500) {
+				textArea.setText("You don't have money for it!\n");
+			}
+		}
+	}
 	//Tama gets happiness by clicking in frame
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -571,12 +555,11 @@ public class TamaGUI extends JFrame implements MouseListener {
 	public void mouseExited(MouseEvent arg0) {
 		mouseHappinessSinker++;
 	}
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 	}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
+
 }

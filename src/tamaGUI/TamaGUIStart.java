@@ -39,6 +39,8 @@ public class TamaGUIStart {
 
 	private GameEngine ge = new GameEngine();
 	private Thread gEngine = new Thread(ge, "GameEngine");
+	
+	JButton btnStartLv1;
 
 	//the starter, with own runnable
 	public void TamaStartGUIStarter(){
