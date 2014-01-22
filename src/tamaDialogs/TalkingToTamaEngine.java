@@ -8,8 +8,9 @@ import tamaGUI.TamaGUI;
  *  This class will work with text input from user and give feedback.
  *  At the moment it just gives random "Don't have time" answers.
  *  
- *  Future plans:
+ *  Future plans: 
  *  More dialogs answers that pick some words from strings.
+ *
  *
  */
 public class TalkingToTamaEngine {
