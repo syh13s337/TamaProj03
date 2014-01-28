@@ -1,12 +1,8 @@
 package tamaGUI;
 
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
-import tamaSystem.DepressionEngine;
-import tamaSystem.HungerEngine;
 
 /** TAMA GUI FACE CLASS, is not real GUI. 
  * This Class gives a animation to player. 
@@ -15,59 +11,55 @@ import tamaSystem.HungerEngine;
  * 
  * Image made by Arild in Paint!
  * Try sue me now!
+ * 
+ * funkar inte....242014
+ * TESTA PROTECTED/ARV system
+ * 
  *
  */
 
-public class TamaGUIFace extends JComponent implements Runnable {
+public class TamaGUIFace extends TamaGUI {
 
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList <ImageIcon> faces;
-	private int depresionValue;
-	private int hungerValue;
 	private TamaGUI tg;
 	private int gameLevel;
-	public int getGameLevel() {
-		return gameLevel;
-	}
+	private ImageIcon label = new ImageIcon();
 
-	public void setGameLevel(int gameLevel) {
+	public TamaGUIFace(TamaGUI tg, int gameLevel){
+		loadpics();
+		this.tg = tg;
 		this.gameLevel = gameLevel;
 	}
 
-	//The Loop, with depression and hunger checker for sad face.
-	@Override
-	public void run() {
-		loadpics();
+	//gives back an animation of Tama, Int x and Int y for sad face animation
+	// make a better system for sad face..
+	public void tamaAnimation(int depresionValue, int hungerValue) {
 		int x = 0;
 		int y = 7;
 
-		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
-			try {
-				if (x >= 7 || y >= 9){
-					x = 0;
-					y = 7;
-				}
-				if (depresionValue <= 3000 || hungerValue <= 3000 ){
-					tg.label.setIcon(faces.get(y));
-					y++;
-				}else{
-					tg.label.setIcon(faces.get(x));
-					x++;
-				}
-				Thread.sleep(3000);
-
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		try {
+			Thread.sleep(3000);
+			if (x >= 7 || y >= 9){
+				x = 0;
+				y = 7;
 			}
+			if (depresionValue <= 3000 || hungerValue <= 3000 ){
+				label = faces.get(y);
+				y++;
+			}else{
+				TamaGUI.label.setIcon(faces.get(x));
+				x++;
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+
 		}
+		tg.labelUpdater(label);
 	}
 
-	public TamaGUIFace(TamaGUI tg){
-		this.tg = tg;
-	}
-
-	//load pics
+	//load pics, depending on game level
 	private void loadpics(){
 		faces = new ArrayList <ImageIcon>();
 
@@ -109,22 +101,5 @@ public class TamaGUIFace extends JComponent implements Runnable {
 		}
 	}
 
-	//GETTER hunger
-	public int getHungerValue() {
-		return hungerValue;
-	}
-	//SET Hunger
-	public void setHungerValue(int hungerValue) {
-		this.hungerValue = hungerValue;
-	}
-
-	//GETTER depression
-	public int getDepressionValue() {
-		return depresionValue;
-	}
-	//SETER depression
-	public void setDepresionValue(int depresionValue) {
-		this.depresionValue = depresionValue;
-	}
 }
 
