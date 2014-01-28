@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 	//STATIC variables, so everyone can touch them for upgrade/graphic purpose.
 	public JFrame GUIFrame;
-	public JLabel label;
+	protected JLabel label;
 	public static TextArea textArea;
 	private int gameLevel;
 	private JProgressBar hungerBar;
@@ -154,7 +155,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 		moneyBar.setBounds(191, 16, 146, 14);
 		GUIFrame.getContentPane().add(moneyBar);
 
-		//for graphic
+		//for animation
 		label = new JLabel();
 		label.setBounds(142, 46, 201, 244);
 		GUIFrame.add(label);	
@@ -422,8 +423,11 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 	}
 
+	public void labelUpdater(ImageIcon label){
+		label.setIcon(label);
+		}
 
-	public void buttonPlay1(){
+	private void buttonPlay1(){
 		if (gameLevel == 1){
 			de.happinessGainedLv2();
 			textArea.setText(infoText.get(0));

@@ -33,23 +33,23 @@ public class GameEngine implements Runnable{
 	private int gameLevel;
 
 	private void initiater(){
-		tgf = new TamaGUIFace(tg);
+
 		
 		Thread depEngine = new Thread(de, "DepressionThread");
 		Thread winEngine = new Thread(we, "WinThread");
 		Thread hunEngine = new Thread(he, "FoodThread");
 		Thread monEngine = new Thread(mo, "MoneyThead");
-		Thread faceEngine = new Thread(tgf, "FaceThread");
 		Thread diaEngine = new Thread(di, "DialogThread");
 		Thread scoEngine = new Thread(se, "ScoreThread");
-
+		
 		diaEngine.start();
 		scoEngine.start();
 		depEngine.start();
 		winEngine.start();
 		hunEngine.start();
 		monEngine.start();
-		faceEngine.start();
+		
+		tgf = new TamaGUIFace(tg, gameLevel);
 	}
 
 	public GameEngine(){
@@ -73,10 +73,6 @@ public class GameEngine implements Runnable{
 	}
 
 	private void barAndFaceUpdater(){
-		//for sad face method,
-		tgf.setDepresionValue(de.getTamaCurrentDepression());
-		tgf.setHungerValue(he.getTamaCurrentHunger());
-
 		//for bars in TamaGUI
 		tg.setDepressionBar(de.getTamaCurrentDepression());	
 		tg.setMoneyBar(mo.getCurrentMoney());
@@ -104,7 +100,6 @@ public class GameEngine implements Runnable{
 	public void startGameGUI(int gameLevel, String frameTitle, String tamaName){
 		this.tamaName = tamaName;
 		this.gameLevel = gameLevel;
-		tgf.setGameLevel(gameLevel);
 		we.setGameLevel(gameLevel);
 		de.setGameLevel(gameLevel);
 		he.setGameLevel(gameLevel);
@@ -112,6 +107,11 @@ public class GameEngine implements Runnable{
 
 		tg = new TamaGUI(gameLevel, frameTitle, tamaName, he, mo, di, tt, de);
 		tg.GUIFrame.setVisible(true);
+	}
+	
+	private void tamaGUIAnimation(){
+		tgf.tamaAnimation(de.getTamaCurrentDepression(), he.getTamaCurrentHunger());
+		
 	}
 
 	@Override
@@ -123,6 +123,7 @@ public class GameEngine implements Runnable{
 				barAndFaceUpdater();
 				deathAndWinChecker(tamaName);
 				mouseEventUpdater();
+				tamaGUIAnimation();
 
 
 				Thread.sleep(100);
