@@ -28,11 +28,8 @@ public class DepressionEngine implements Runnable {
 	private boolean deathByDepression = false;
 
 	private int gameLevel;
-	public int getGameLevel() {
-		return gameLevel;
-	}
 	public void setGameLevel(int gameLevel) {
-		gameLevel = gameLevel;
+		this.gameLevel = gameLevel;
 	}
 	
 	
@@ -85,8 +82,8 @@ public class DepressionEngine implements Runnable {
 	}
 
 	//When Tama reach 0 depression
-	//
 	// CHANGE SYSTEM
+	//
 	private void deathByDepression() {
 		if (tamaCurrentDepression <= 0){
 			deathByDepression = true;
@@ -125,8 +122,6 @@ public class DepressionEngine implements Runnable {
 		tamaCurrentDepression -= mouseHappinessSinker;
 	}
 
-	//
-	//
 	//Getters and setters
 	public boolean isDeathByDepression() {
 		return deathByDepression;

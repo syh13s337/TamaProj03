@@ -14,7 +14,6 @@ public class TamaStartClass {
 	public static void main(String[] args) {
 		TamaGUIStart tgs = new TamaGUIStart();
 		tgs.TamaStartGUIStarter();
-		
 	}
 }
 

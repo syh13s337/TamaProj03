@@ -22,40 +22,39 @@ public class GameEngine implements Runnable{
 	private WinAndEndEngine we = new WinAndEndEngine();
 	private DepressionEngine de = new DepressionEngine();
 	private HungerEngine he = new HungerEngine();
+	private TamaGUI tg;
 	private TamaGUIFace tgf;
-	private TamaGUI tg = new TamaGUI();
 	private MoneyEngine mo = new MoneyEngine();
 	private DialogEngine di = new DialogEngine();
 	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
 	private ScoreEngine se = new ScoreEngine();
+	//	private MySQLEngine mysql = new MySQLEngine();
 
 	private String tamaName = "";
 	private int gameLevel;
 
 	private void initiater(){
-
-		
 		Thread depEngine = new Thread(de, "DepressionThread");
 		Thread winEngine = new Thread(we, "WinThread");
 		Thread hunEngine = new Thread(he, "FoodThread");
 		Thread monEngine = new Thread(mo, "MoneyThead");
 		Thread diaEngine = new Thread(di, "DialogThread");
 		Thread scoEngine = new Thread(se, "ScoreThread");
-		
+		Thread tgfEngine = new Thread(tgf, "TgfThread");
+
 		diaEngine.start();
 		scoEngine.start();
 		depEngine.start();
 		winEngine.start();
 		hunEngine.start();
 		monEngine.start();
-		
-		tgf = new TamaGUIFace(tg, gameLevel);
+		tgfEngine.start();
+
 	}
 
 	public GameEngine(){
 
 	}
-
 
 	private void deathAndWinChecker(String tamanName){
 		if (de.isDeathByDepression() == true){
@@ -106,12 +105,9 @@ public class GameEngine implements Runnable{
 		mo.setGameLevel(gameLevel);
 
 		tg = new TamaGUI(gameLevel, frameTitle, tamaName, he, mo, di, tt, de);
+		tgf = new TamaGUIFace(tg, gameLevel, de, he);
+
 		tg.GUIFrame.setVisible(true);
-	}
-	
-	private void tamaGUIAnimation(){
-		tgf.tamaAnimation(de.getTamaCurrentDepression(), he.getTamaCurrentHunger());
-		
 	}
 
 	@Override
@@ -123,26 +119,13 @@ public class GameEngine implements Runnable{
 				barAndFaceUpdater();
 				deathAndWinChecker(tamaName);
 				mouseEventUpdater();
-				tamaGUIAnimation();
 
-
-				Thread.sleep(100);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
-
-	//GETTER name
-	public String getTamaName() {
-		return tamaName;
-	}
-	//SETTER name
-	public void setTamaName(String tamaName) {
-		this.tamaName = tamaName;
-	}
-
 }
 
 

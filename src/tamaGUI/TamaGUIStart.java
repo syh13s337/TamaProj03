@@ -95,7 +95,7 @@ public class TamaGUIStart {
 		scrollPane.setViewportView(InfoText);
 		frmTamav.getContentPane().add(scrollPane);
 
-		//text
+		//TEXT FIELD
 		txtEnterTamaName = new JTextField();
 		txtEnterTamaName.setToolTipText("Enter the name of your Tama");
 		txtEnterTamaName.setText("Enter Tama name, and pick level! ");
@@ -204,7 +204,6 @@ public class TamaGUIStart {
 							+ "\nGame is at the moment Unbalanced");
 					tmpX++;
 				}
-
 			}
 		});
 		btnAbout.setToolTipText("Information about the game");

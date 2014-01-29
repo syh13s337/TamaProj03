@@ -1,7 +1,12 @@
 package tamaGUI;
 
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import tamaSystem.DepressionEngine;
+import tamaSystem.HungerEngine;
 
 
 /** TAMA GUI FACE CLASS, is not real GUI. 
@@ -18,45 +23,41 @@ import javax.swing.ImageIcon;
  *
  */
 
-public class TamaGUIFace extends TamaGUI {
+public class TamaGUIFace implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
+	private JLabel label;
 	private ArrayList <ImageIcon> faces;
 	private TamaGUI tg;
 	private int gameLevel;
-	private ImageIcon label = new ImageIcon();
+	private DepressionEngine de;
+	private HungerEngine he;
+	private ImageIcon tmp;
+	private int x = 0;
+	private int y = 7;
 
-	public TamaGUIFace(TamaGUI tg, int gameLevel){
-		loadpics();
+
+	public TamaGUIFace(TamaGUI tg, int gameLevel, DepressionEngine de, HungerEngine he){
 		this.tg = tg;
 		this.gameLevel = gameLevel;
+		this.de = de;
+		this.he = he;
 	}
 
-	//gives back an animation of Tama, Int x and Int y for sad face animation
-	// make a better system for sad face..
-	public void tamaAnimation(int depresionValue, int hungerValue) {
-		int x = 0;
-		int y = 7;
-
-		try {
-			Thread.sleep(3000);
-			if (x >= 7 || y >= 9){
-				x = 0;
-				y = 7;
-			}
-			if (depresionValue <= 3000 || hungerValue <= 3000 ){
-				label = faces.get(y);
-				y++;
-			}else{
-				TamaGUI.label.setIcon(faces.get(x));
-				x++;
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-
+	private void animationUpdater(){
+		if (x >= 7 || y >= 9){
+			x = 0;
+			y = 7;
 		}
-		tg.labelUpdater(label);
+		if (de.getTamaCurrentDepression() <= 3000 || he.getTamaCurrentHunger() <= 3000 ){
+			tmp = faces.get(y);
+			y++;
+		}else{
+			tmp = faces.get(x);
+			x++;
+		}
+		tg.labelUpdater(tmp);
 	}
 
 	//load pics, depending on game level
@@ -101,5 +102,18 @@ public class TamaGUIFace extends TamaGUI {
 		}
 	}
 
+	@Override
+	public void run() {
+		loadpics();
+
+		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
+			try {
+				animationUpdater();
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
 

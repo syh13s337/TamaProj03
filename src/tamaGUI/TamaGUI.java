@@ -37,7 +37,7 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 	//STATIC variables, so everyone can touch them for upgrade/graphic purpose.
 	public JFrame GUIFrame;
-	protected JLabel label;
+	private JLabel label = new JLabel();
 	public static TextArea textArea;
 	private int gameLevel;
 	private JProgressBar hungerBar;
@@ -53,11 +53,11 @@ public class TamaGUI extends JFrame implements MouseListener {
 	private int moneyValue;
 	private int hungerValue;
 
-	public JButton btnPlay1;
-	public JButton btnPlay2;
-	public JButton btnFood1;
-	public JButton btnFood2;
-	public JButton btnFood3;
+	private JButton btnPlay1;
+	private JButton btnPlay2;
+	private JButton btnFood1;
+	private JButton btnFood2;
+	private JButton btnFood3;
 
 	private int moneyMouseCounter = 0;
 	public void setMoneyMouseCounter(int moneyMouseCounter) {
@@ -156,7 +156,6 @@ public class TamaGUI extends JFrame implements MouseListener {
 		GUIFrame.getContentPane().add(moneyBar);
 
 		//for animation
-		label = new JLabel();
 		label.setBounds(142, 46, 201, 244);
 		GUIFrame.add(label);	
 
@@ -295,7 +294,6 @@ public class TamaGUI extends JFrame implements MouseListener {
 		else if (deppresionValue >= 5000){
 			depressionBar.setForeground(new Color(0, 128, 0));
 			depressionBar.setValue(65);
-
 		}
 		else if(deppresionValue >= 4000){
 			depressionBar.setForeground(Color.ORANGE);
@@ -323,12 +321,10 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 		}
 		else if(deppresionValue >= 1500){
-
 			depressionBar.setValue(5);
 
 		}
 		else if(deppresionValue >= 1000){
-
 			depressionBar.setValue(0);
 		}
 
@@ -423,8 +419,8 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 	}
 
-	public void labelUpdater(ImageIcon label){
-		label.setIcon(label);
+	public void labelUpdater(ImageIcon tmp){
+		label.setIcon(tmp);
 		}
 
 	private void buttonPlay1(){
@@ -489,7 +485,6 @@ public class TamaGUI extends JFrame implements MouseListener {
 			}					
 		}
 	}
-
 
 	private void buttonFood2(){
 		if (gameLevel == 1){
