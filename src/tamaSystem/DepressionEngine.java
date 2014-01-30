@@ -1,6 +1,5 @@
 package tamaSystem;
 
-import java.awt.Color;
 import java.util.Random;
 import tamaGUI.TamaGUI;
 import tamaGUI.TamaGUIStart;

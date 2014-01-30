@@ -51,7 +51,6 @@ public class MySQLEngine {
 			return;
 		}		
 		System.out.println("*****Connection succsessfull!*****"); //Good to make a syso that tells that its online.
-
 	}
 
 

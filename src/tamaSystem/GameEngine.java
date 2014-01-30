@@ -1,12 +1,10 @@
 package tamaSystem;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import tamaDialogs.DialogEngine;
 import tamaDialogs.TalkingToTamaEngine;
 import tamaGUI.TamaGUI;
 import tamaGUI.TamaGUIFace;
+import tamaGUI.TamaGUILogIn;
 import tamaGUI.TamaGUIStart;
 
 /**THE GAME ENGINE
@@ -28,6 +26,9 @@ public class GameEngine implements Runnable{
 	private DialogEngine di = new DialogEngine();
 	private TalkingToTamaEngine tt = new TalkingToTamaEngine();
 	private ScoreEngine se = new ScoreEngine();
+	private TamaGUILogIn tgli = new TamaGUILogIn();
+	private GameEngine ge;
+	private UserEngine ue;
 	//	private MySQLEngine mysql = new MySQLEngine();
 
 	private String tamaName = "";
@@ -95,6 +96,11 @@ public class GameEngine implements Runnable{
 		tg.setMouseGainHappiness(0);
 
 	}
+	
+	public void StartLogIn(){
+		TamaGUILogIn login = new TamaGUILogIn();
+		login.loginStarter(ge, ue);
+	}
 
 	public void startGameGUI(int gameLevel, String frameTitle, String tamaName){
 		this.tamaName = tamaName;
@@ -106,7 +112,6 @@ public class GameEngine implements Runnable{
 
 		tg = new TamaGUI(gameLevel, frameTitle, tamaName, he, mo, di, tt, de);
 		tgf = new TamaGUIFace(tg, gameLevel, de, he);
-
 		tg.GUIFrame.setVisible(true);
 	}
 
