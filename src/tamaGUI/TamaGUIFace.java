@@ -17,8 +17,6 @@ import tamaSystem.HungerEngine;
  * Image made by Arild in Paint!
  * Try sue me now!
  * 
- * funkar inte....242014
- * TESTA PROTECTED/ARV system
  * 
  *
  */

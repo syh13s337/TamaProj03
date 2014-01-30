@@ -61,7 +61,7 @@ public class DepressionEngine implements Runnable {
 		}
 	}
 
-	//Random generate, good mood for tama
+	//Random generate, good mood for Tama
 	private void TamaRandomGoodMood(){
 		int rndNr = intGenerator.nextInt(30);
 		if (rndNr == 5){

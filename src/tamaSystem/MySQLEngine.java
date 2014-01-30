@@ -15,12 +15,9 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  * It will get DB and maybe get DB too.
  * 
  * MUST START SOMEWERE WHERE OTHER CLASS CAN GET GAMEVALUES?
- * 
- * 
  */
 
 public class MySQLEngine {
-
 	//ON TOP INCASE OF UPDATE OR CHANGE PATH.
 	private final String SERVER_NAME = "localhost";
 	private final String DATABASE_NAME = "dbprojecttama";
@@ -82,6 +79,8 @@ public class MySQLEngine {
 		System.out.println("*****INSERT SUCCSESSFULL*****");
 		System.out.println("Adected rows: " + affectedRows);
 	}
+	
+	//INSERT, 
 
 	//select and get information, Need path to column.
 	private void resultMethod(){

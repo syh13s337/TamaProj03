@@ -103,7 +103,6 @@ public class TamaGUI extends JFrame implements MouseListener {
 		this.di = di;
 		this.tt = tt;
 		this.de = de;
-
 	}
 
 	public TamaGUI(){
