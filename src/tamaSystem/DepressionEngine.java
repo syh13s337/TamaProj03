@@ -1,6 +1,5 @@
 package tamaSystem;
 
-import java.awt.Color;
 import java.util.Random;
 import tamaGUI.TamaGUI;
 import tamaGUI.TamaGUIStart;
@@ -28,11 +27,8 @@ public class DepressionEngine implements Runnable {
 	private boolean deathByDepression = false;
 
 	private int gameLevel;
-	public int getGameLevel() {
-		return gameLevel;
-	}
 	public void setGameLevel(int gameLevel) {
-		gameLevel = gameLevel;
+		this.gameLevel = gameLevel;
 	}
 	
 	
@@ -64,7 +60,7 @@ public class DepressionEngine implements Runnable {
 		}
 	}
 
-	//Random generate, good mood for tama
+	//Random generate, good mood for Tama
 	private void TamaRandomGoodMood(){
 		int rndNr = intGenerator.nextInt(30);
 		if (rndNr == 5){
@@ -85,8 +81,8 @@ public class DepressionEngine implements Runnable {
 	}
 
 	//When Tama reach 0 depression
-	//
 	// CHANGE SYSTEM
+	//
 	private void deathByDepression() {
 		if (tamaCurrentDepression <= 0){
 			deathByDepression = true;
@@ -125,8 +121,6 @@ public class DepressionEngine implements Runnable {
 		tamaCurrentDepression -= mouseHappinessSinker;
 	}
 
-	//
-	//
 	//Getters and setters
 	public boolean isDeathByDepression() {
 		return deathByDepression;

@@ -37,7 +37,11 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 	//STATIC variables, so everyone can touch them for upgrade/graphic purpose.
 	public JFrame GUIFrame;
+<<<<<<< HEAD
 	protected JLabel label;
+=======
+	private JLabel label = new JLabel();
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 	public static TextArea textArea;
 	private int gameLevel;
 	private JProgressBar hungerBar;
@@ -53,11 +57,19 @@ public class TamaGUI extends JFrame implements MouseListener {
 	private int moneyValue;
 	private int hungerValue;
 
+<<<<<<< HEAD
 	public JButton btnPlay1;
 	public JButton btnPlay2;
 	public JButton btnFood1;
 	public JButton btnFood2;
 	public JButton btnFood3;
+=======
+	private JButton btnPlay1;
+	private JButton btnPlay2;
+	private JButton btnFood1;
+	private JButton btnFood2;
+	private JButton btnFood3;
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 
 	private int moneyMouseCounter = 0;
 	public void setMoneyMouseCounter(int moneyMouseCounter) {
@@ -103,7 +115,10 @@ public class TamaGUI extends JFrame implements MouseListener {
 		this.di = di;
 		this.tt = tt;
 		this.de = de;
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 	}
 
 	public TamaGUI(){
@@ -156,7 +171,10 @@ public class TamaGUI extends JFrame implements MouseListener {
 		GUIFrame.getContentPane().add(moneyBar);
 
 		//for animation
+<<<<<<< HEAD
 		label = new JLabel();
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 		label.setBounds(142, 46, 201, 244);
 		GUIFrame.add(label);	
 
@@ -295,7 +313,10 @@ public class TamaGUI extends JFrame implements MouseListener {
 		else if (deppresionValue >= 5000){
 			depressionBar.setForeground(new Color(0, 128, 0));
 			depressionBar.setValue(65);
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 		}
 		else if(deppresionValue >= 4000){
 			depressionBar.setForeground(Color.ORANGE);
@@ -323,12 +344,18 @@ public class TamaGUI extends JFrame implements MouseListener {
 
 		}
 		else if(deppresionValue >= 1500){
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 			depressionBar.setValue(5);
 
 		}
 		else if(deppresionValue >= 1000){
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 			depressionBar.setValue(0);
 		}
 
@@ -423,8 +450,13 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 	}
 
+<<<<<<< HEAD
 	public void labelUpdater(ImageIcon label){
 		label.setIcon(label);
+=======
+	public void labelUpdater(ImageIcon tmp){
+		label.setIcon(tmp);
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 		}
 
 	private void buttonPlay1(){
@@ -490,7 +522,10 @@ public class TamaGUI extends JFrame implements MouseListener {
 		}
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 	private void buttonFood2(){
 		if (gameLevel == 1){
 			if (moneyValue >= 2000){

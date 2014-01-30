@@ -1,7 +1,16 @@
 package tamaGUI;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import javax.swing.ImageIcon;
+=======
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import tamaSystem.DepressionEngine;
+import tamaSystem.HungerEngine;
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 
 
 /** TAMA GUI FACE CLASS, is not real GUI. 
@@ -12,12 +21,16 @@ import javax.swing.ImageIcon;
  * Image made by Arild in Paint!
  * Try sue me now!
  * 
+<<<<<<< HEAD
  * funkar inte....242014
  * TESTA PROTECTED/ARV system
+=======
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
  * 
  *
  */
 
+<<<<<<< HEAD
 public class TamaGUIFace extends TamaGUI {
 
 	private static final long serialVersionUID = 1L;
@@ -57,6 +70,43 @@ public class TamaGUIFace extends TamaGUI {
 
 		}
 		tg.labelUpdater(label);
+=======
+public class TamaGUIFace implements Runnable {
+
+	private static final long serialVersionUID = 1L;
+
+	private JLabel label;
+	private ArrayList <ImageIcon> faces;
+	private TamaGUI tg;
+	private int gameLevel;
+	private DepressionEngine de;
+	private HungerEngine he;
+	private ImageIcon tmp;
+	private int x = 0;
+	private int y = 7;
+
+
+	public TamaGUIFace(TamaGUI tg, int gameLevel, DepressionEngine de, HungerEngine he){
+		this.tg = tg;
+		this.gameLevel = gameLevel;
+		this.de = de;
+		this.he = he;
+	}
+
+	private void animationUpdater(){
+		if (x >= 7 || y >= 9){
+			x = 0;
+			y = 7;
+		}
+		if (de.getTamaCurrentDepression() <= 3000 || he.getTamaCurrentHunger() <= 3000 ){
+			tmp = faces.get(y);
+			y++;
+		}else{
+			tmp = faces.get(x);
+			x++;
+		}
+		tg.labelUpdater(tmp);
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 	}
 
 	//load pics, depending on game level
@@ -101,5 +151,21 @@ public class TamaGUIFace extends TamaGUI {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public void run() {
+		loadpics();
+
+		while(TamaGUIStart.ALL_THREADS_RUNNING == true){
+			try {
+				animationUpdater();
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 }
 

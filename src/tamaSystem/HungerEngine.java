@@ -76,7 +76,11 @@ public class HungerEngine implements Runnable  {
 
 	//Thread Sleeper engine, 
 	private void hungerBuilder(int x){
+<<<<<<< HEAD
 		tamaCurrentHunger -= hungerValue;
+=======
+		tamaCurrentHunger -= getHungerValue();
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 		try {
 			Thread.sleep(x);
 		} catch (InterruptedException e) {
@@ -171,5 +175,15 @@ public class HungerEngine implements Runnable  {
 		this.tamaCurrentHunger = tamaCurrentHunger;
 	}
 
+<<<<<<< HEAD
+=======
+	public int getHungerValue() {
+		return hungerValue;
+	}
+
+	public void setHungerValue(int hungerValue) {
+		this.hungerValue = hungerValue;
+	}
+>>>>>>> cb3ca3fc395621a2a2303b0a0594ea7b8c99b521
 
 }
